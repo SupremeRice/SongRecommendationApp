@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class SpotifyAPIParser {
     public String parse(InputStream testDataStream) throws IOException {
-        JSONArray result= (JSONArray) JsonPath.read(testDataStream,"$..genres[52,59,99,103,124]");
+        JSONArray result= JsonPath.read(testDataStream,"$..genres[52,59,99,103,124]");
         int[] indices = {0, 1, 2, 3, 4};
         StringBuilder sb = new StringBuilder();
         for (int index : indices) {

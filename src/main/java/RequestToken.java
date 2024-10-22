@@ -1,55 +1,60 @@
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Base64;
 
 
 public class RequestToken {
 
-    public static void main(String[] args) {
-        try {
-            String accessToken = getAccessToken();
-            System.out.println("Access Token: " + accessToken);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    String clientID = "dd6b2daa511b43089bf71651eaf0ca74";
+    String clientSecret = "4bfb2902292045f7815ef909cab7984d";
+    String tokenURL = "https://accounts.spotify.com/api/token";
+    String accessToken;
 
-    private static String getAccessToken() throws IOException {
-        String clientID = "dd6b2daa511b43089bf71651eaf0ca74";
-        String clientSecret = "4bfb2902292045f7815ef909cab7984d";
+    public String getAccessToken() throws Exception{
+        if (accessToken == null || accessToken.isEmpty()){
+            fetchAccessToken();
+        }
+        return accessToken;
+    }
+    private void fetchAccessToken() throws IOException {
         String auth = clientID + ":" + clientSecret;
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes());
 
-        URL url = new URL("https://accounts.spotify.com/api/token");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("Authorization", "Basic " + encodedAuth);
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setDoOutput(true);
+        URL url = new URL(tokenURL);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Authorization", "Basic " + encodedAuth);
+        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        connection.setDoOutput(true);
 
         String body = "grant_type=client_credentials";
-        try (OutputStream os = conn.getOutputStream()) {
+        try (OutputStream os = connection.getOutputStream()) {
             os.write(body.getBytes());
             os.flush();
         }
-
-        int responseCode = conn.getResponseCode();
-        System.out.println("Response Code: " + responseCode);
-
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
-                String responseLine;
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK){
+            try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()))){
                 StringBuilder response = new StringBuilder();
-                while ((responseLine = br.readLine()) != null) {
-                    response.append(responseLine);
+                String line;
+                while ((line = bufferedReader.readLine()) != null){
+                    response.append(line);
                 }
-                System.out.println("Response: " + response);
+                accessToken = parseAccessToken(response.toString());
             }
-        } else {
-            System.out.println("Error: " + conn.getResponseMessage());
-            return null;
+        }else{
+            throw new RuntimeException("Failed to fetch access token: " + connection.getResponseMessage());
         }
-        return clientID;
+    }
+    private String parseAccessToken(String response){
+        if (response.contains("access_token")){
+            return response.substring(response.indexOf("access_token") + 15, response.indexOf("token_type") - 3);
+        }
+        return null;
     }
 }
