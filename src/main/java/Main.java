@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -6,13 +5,13 @@ public class Main {
 
         try {
             RequestToken tokenRequest = new RequestToken();
-            SpotifyAPI spotifyAPI = new SpotifyAPI(tokenManager);
+            ArtistByGenre artistByGenre = new ArtistByGenre(tokenRequest);
 
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter a genre: ");
             String genre = scanner.nextLine();
 
-            spotifyAPI.getArtistsByGenre(genre);
+            artistByGenre.getArtistByGenre(genre.toLowerCase());
         } catch (Exception e) {
             e.printStackTrace();
         }
