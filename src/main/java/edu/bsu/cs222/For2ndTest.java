@@ -1,3 +1,5 @@
+package edu.bsu.cs222;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;

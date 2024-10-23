@@ -1,11 +1,12 @@
+package edu.bsu.cs222;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
         try {
-            RequestToken tokenRequest = new RequestToken();
-            ArtistByGenre artistByGenre = new ArtistByGenre(tokenRequest);
+            ArtistByGenre artistByGenre = new ArtistByGenre();
 
             Scanner scanner = new Scanner(System.in);
             System.out.print("Enter a genre: ");
