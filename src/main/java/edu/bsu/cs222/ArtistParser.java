@@ -9,12 +9,14 @@ public class ArtistParser {
         JSONArray tracks = jsonObject.getJSONArray("tracks");
 
         if (tracks.length() > 0) {
+            int artistCount = 0;
             System.out.println("Artists:");
-            for (int i = 0; i < tracks.length(); i++) {
+            for (int i = 0; i < tracks.length() && artistCount < 5; i++) {
                 JSONArray artists = tracks.getJSONObject(i).getJSONArray("artists");
-                for (int j = 0; j < artists.length(); j++) {
+                for (int j = 0; j < artists.length() && artistCount < 5; j++) {
                     String artistName = artists.getJSONObject(j).getString("name");
                     System.out.println(artistName);
+                    artistCount++;
                 }
             }
         } else {

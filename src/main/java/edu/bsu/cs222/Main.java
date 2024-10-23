@@ -9,7 +9,8 @@ public class Main {
             ArtistByGenre artistByGenre = new ArtistByGenre();
 
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter a genre: ");
+            System.out.println("hip-hop | indie-pop | rock | sad | work-out");
+            System.out.println("Enter a genre: ");
             String genre = scanner.nextLine();
 
             artistByGenre.getArtistByGenre(genre.toLowerCase());
