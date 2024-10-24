@@ -7,7 +7,6 @@ public class ArtistParser {
     public void printArtists(String jsonResponse) {
         JSONObject jsonObject = new JSONObject(jsonResponse);
         JSONArray tracks = jsonObject.getJSONArray("tracks");
-
         if (tracks.length() > 0) {
             int artistCount = 0;
             System.out.println("Artists:");
@@ -23,4 +22,6 @@ public class ArtistParser {
             System.out.println("No tracks found for this genre.");
         }
     }
+
+
 }
