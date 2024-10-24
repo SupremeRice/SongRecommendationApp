@@ -34,9 +34,9 @@ public class RequestToken {
         connection.setDoOutput(true);
 
         String body = "grant_type=client_credentials";
-        try (OutputStream os = connection.getOutputStream()) {
-            os.write(body.getBytes());
-            os.flush();
+        try (OutputStream outputStreams = connection.getOutputStream()) {
+            outputStreams.write(body.getBytes());
+            outputStreams.flush();
         }
         int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK){
