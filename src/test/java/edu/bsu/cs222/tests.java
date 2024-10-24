@@ -1,7 +1,5 @@
 package edu.bsu.cs222;
 
-import edu.bsu.cs222.For2ndTest;
-import edu.bsu.cs222.SpotifyAPIParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,8 +16,8 @@ public class tests {
     @Test
     public void testFiveGenre() throws IOException {
        SpotifyAPIParser parser = new SpotifyAPIParser();
-        // Reads "test.JSON" text file
-        InputStream testDataStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.JSON");
+
+        InputStream testDataStream = getClass().getResourceAsStream("test.JSON");
         String FiveGenre = parser.parse(testDataStream);
         assertEquals("hip-hop, indie-pop, rock, sad, work-out", FiveGenre);
     }
@@ -32,14 +30,11 @@ public class tests {
             String jsonResponse = recommendations.fetchRecommendations();
             assertNotNull(jsonResponse, "The response should not be null");
 
-            // Parse the JSON response
             JSONObject jsonObject = new JSONObject(jsonResponse);
             JSONArray tracks = jsonObject.getJSONArray("tracks");
 
-            // Check that tracks array is not empty
             assertFalse(tracks.isEmpty(), "Tracks array should not be empty");
 
-            // Loop through each track and verify the album name is not null or empty
             for (int i = 0; i < tracks.length(); i++) {
                 JSONObject track = tracks.getJSONObject(i);
                 JSONObject album = track.getJSONObject("album");
