@@ -8,7 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReadAlbumNamesTest {
     @Test
     public void testReadAlbumNames() {
-        String accessToken = "BQBXPsTYhDrhoFN2Zb58JXln7JedsPO7uLsES3Ym2muyfxfR1knkRPpan-wcC5y-Vwb_tKtfLX29b-pL7c1VBUaf22BPUqRB9qKs4qQYucO6DJ53qHo"; // Replace with your valid access token
+        // Replace with valid access token
+        String accessToken = "BQBXPsTYhDrhoFN2Zb58JXln7JedsPO7uLsES3Ym2muyfxfR1knkRPpan-wcC5y-Vwb_tKtfLX29b-pL7c1VBUaf22BPUqRB9qKs4qQYucO6DJ53qHo";
         For2ndTest recommendations = new For2ndTest(accessToken);
 
         try {
