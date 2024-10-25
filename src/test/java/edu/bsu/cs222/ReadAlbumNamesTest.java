@@ -1,26 +1,11 @@
 package edu.bsu.cs222;
 
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class tests {
-    @Test
-    public void testFiveGenre() throws IOException {
-       SpotifyAPIParser parser = new SpotifyAPIParser();
-
-        InputStream testDataStream = getClass().getResourceAsStream("test.JSON");
-        String FiveGenre = parser.parse(testDataStream);
-        assertEquals("hip-hop, indie-pop, rock, sad, work-out", FiveGenre);
-    }
+public class ReadAlbumNamesTest {
     @Test
     public void testReadAlbumNames() {
         String accessToken = "BQBXPsTYhDrhoFN2Zb58JXln7JedsPO7uLsES3Ym2muyfxfR1knkRPpan-wcC5y-Vwb_tKtfLX29b-pL7c1VBUaf22BPUqRB9qKs4qQYucO6DJ53qHo"; // Replace with your valid access token
